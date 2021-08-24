@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-grafica1',
@@ -6,11 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class Grafica1Component implements OnInit {
+export class Grafica1Component{
+  @Output() labels: EventEmitter<string[]> = new EventEmitter();
+  
+  public labels1: string[] = ['Pan', 'Refresco', 'Tacos'];
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  @Output() data: EventEmitter<number[]> = new EventEmitter();
+  
+  public data1 = [
+    [10, 15, 40]
+  ];
 
 }
