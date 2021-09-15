@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap, map, catchError } from 'rxjs/operators'; // tap: This operator triggers a secondary efect
+import { tap, map, catchError, delay } from 'rxjs/operators'; // tap: This operator triggers a secondary efect
 import { of, Observable } from 'rxjs'; //of RX operator that creates an observable of certain type
 import { Router } from '@angular/router';
 
@@ -8,6 +8,7 @@ import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user.model';
+import { LoadUser } from '../interfaces/load-users.interface';
 
 declare const gapi: any;
 
@@ -37,18 +38,22 @@ export class UserService {
     return this.user.uid || '';
   }
 
+  get headers() {
+    return {
+        headers: {
+          'x-token': this.token
+        }
+    }
+  }
+
   updateProfile(data: { email:string, name:string, role:string }){
 
     data = {
-      ...data,
-      role: this.user.role
+       ...data,
+       role: this.user.role
     }
 
-    return this.http.put(`${base_url}/users/${ this.uid }`, data, {
-                  headers: {
-                    'x-token': this.token
-                  }
-                });
+    return this.http.put(`${base_url}/users/${ this.uid }`, data, this.headers );
 
   }
 
@@ -143,5 +148,32 @@ export class UserService {
     })
   }
 
+  loadUsers( from: number = 0 ){
+
+    const url = `${base_url}/users?from=${ from }`
+    return this.http.get<LoadUser>( url, this.headers )
+            .pipe(
+              delay(1000),
+              map( res => {
+                  const users = res.users.map( user => new User(user.name, user.email, '', user.img, user.google, user.role, user.uid) );
+                  return {
+                    total: res.total,
+                    users
+                  }
+              })
+            )
+
+  }
+
+  deleteUser(user: User){
+    const url = `${base_url}/users/${user.uid}`;
+    return this.http.delete( url, this.headers );
+  }
+
+
+  
+  saveUser(user: User){
+      return this.http.put(`${base_url}/users/${ user.uid }`, user, this.headers );
+  }
 
 }

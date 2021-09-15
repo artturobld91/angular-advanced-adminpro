@@ -11,6 +11,9 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromiseComponent } from './promise/promise.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './manteinances/users/users.component';
+import { HospitalsComponent } from './manteinances/hospitals/hospitals.component';
+import { DoctorsComponent } from './manteinances/doctors/doctors.component';
 
 const routes: Routes = [
     { 
@@ -18,14 +21,19 @@ const routes: Routes = [
         component: PagesComponent,
         canActivate: [AuthGuard],
         children: [
-        { path: '', component : DashboardComponent, data: { title: 'Dashboard' }},
-        { path: 'progress', component : ProgressComponent, data: { title: 'Progress' }},
-        { path: 'grafica1', component : Grafica1Component, data: { title: 'Graph' }},
-        { path: 'account-settings', component : AccountSettingsComponent, data: { title: 'Account Settings' }},
-        { path: 'promise', component : PromiseComponent, data: { title: 'Promise' }},
-        { path: 'rxjs', component : RxjsComponent, data: { title: 'RXJS' }},
-        { path: 'profile', component : ProfileComponent, data: { title: 'Profile' }},
-        { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+            { path: '', component : DashboardComponent, data: { title: 'Dashboard' }},
+            { path: 'progress', component : ProgressComponent, data: { title: 'Progress' }},
+            { path: 'grafica1', component : Grafica1Component, data: { title: 'Graph' }},
+            { path: 'account-settings', component : AccountSettingsComponent, data: { title: 'Account Settings' }},
+            { path: 'promise', component : PromiseComponent, data: { title: 'Promise' }},
+            { path: 'rxjs', component : RxjsComponent, data: { title: 'RXJS' }},
+            { path: 'profile', component : ProfileComponent, data: { title: 'Profile' }},
+            { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+
+            // Manteinances
+            { path: 'users', component : UsersComponent, data: { title: 'User Application' }},
+            { path: 'hospitals', component : HospitalsComponent, data: { title: 'Hospital Application' }},
+            { path: 'doctors', component : DoctorsComponent, data: { title: 'Doctor Application' }},
         ]
   },
   
