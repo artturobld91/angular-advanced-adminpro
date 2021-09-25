@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { ComponentsModule } from '../components/components.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 //Components
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -20,6 +21,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { UsersComponent } from './manteinances/users/users.component';
 import { HospitalsComponent } from './manteinances/hospitals/hospitals.component';
 import { DoctorsComponent } from './manteinances/doctors/doctors.component';
+import { DoctorComponent } from './manteinances/doctors/doctor.component';
 
 
 
@@ -36,6 +38,7 @@ import { DoctorsComponent } from './manteinances/doctors/doctors.component';
     UsersComponent,
     HospitalsComponent,
     DoctorsComponent,
+    DoctorComponent,
   ],
   exports : [
     DashboardComponent,
@@ -52,7 +55,8 @@ import { DoctorsComponent } from './manteinances/doctors/doctors.component';
     ReactiveFormsModule,
     SharedModule,
     AppRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ]
 })
 export class PagesModule { }

@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 
 import { User } from '../models/user.model';
+import { Hospital } from '../models/hospital.model';
+import { Doctor } from '../models/doctor.model';
 
 const base_url = environment.base_url;
 
@@ -37,7 +39,10 @@ export class SearchsService {
                 switch ( type ) {
                   case 'Users':
                     return this.transformUsers( res.results );
-                
+                  case 'Hospitals':
+                      return this.transformHospitals( res.results );
+                  case 'Doctors':
+                    return this.transformDoctors( res.results );
                   default:
                     return [];
                 }
@@ -53,5 +58,20 @@ export class SearchsService {
       user => new User(user.name, user.email, '', user.img, user.google, user.role, user.uid)
     );
   }
+
+  private transformHospitals( results: any[] ): Hospital[] {
+
+    return results.map(
+      hospital => new Hospital(hospital.name, hospital._id, hospital.img, hospital.user)
+    );
+  }
+
+  private transformDoctors( results: any[] ): Doctor[] {
+
+    return results.map(
+      doctor => new Doctor(doctor.name, doctor._id, doctor.img, doctor.user)
+    );
+  }
+
 
 }
