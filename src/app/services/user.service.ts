@@ -38,6 +38,10 @@ export class UserService {
     return this.user.uid || '';
   }
 
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE' {
+    return this.user.role;
+  }
+
   get headers() {
     return {
         headers: {
@@ -63,7 +67,7 @@ export class UserService {
     return this.http.post(`${base_url}/users`, formData)
                 .pipe(
                   tap( (res: any) => {
-                      localStorage.setItem('token', res.token)
+                    this.saveLocalStorage(res.token, res.menu);
                   })
                 );
   }
@@ -74,7 +78,7 @@ export class UserService {
     return this.http.post(`${base_url}/login`, formData)
                 .pipe(
                   tap( (res: any) => {
-                      localStorage.setItem('token', res.token)
+                    this.saveLocalStorage(res.token, res.menu);
                   })
                 );
   }
@@ -85,7 +89,7 @@ export class UserService {
     return this.http.post(`${base_url}/login/google`, {token})
                 .pipe(
                   tap( (res: any) => {
-                      localStorage.setItem('token', res.token)
+                    this.saveLocalStorage(res.token, res.menu);
                   })
                 );
   }
@@ -105,7 +109,7 @@ export class UserService {
         const { email, google, name, role, img = '', uid } = res.user;
         this.user = new User(name, email, '', img, google, role, uid);
 
-        localStorage.setItem('token', res.token);
+        this.saveLocalStorage(res.token, res.menu);
 
         return true;
       }),
@@ -116,6 +120,7 @@ export class UserService {
 
   logout(){
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
     
     this.auth2.signOut().then( () => {
 
@@ -176,4 +181,8 @@ export class UserService {
       return this.http.put(`${base_url}/users/${ user.uid }`, user, this.headers );
   }
 
+  saveLocalStorage( token: string, menu: any ){
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
+  }
 }

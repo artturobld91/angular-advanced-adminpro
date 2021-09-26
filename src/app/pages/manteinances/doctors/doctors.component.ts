@@ -53,7 +53,7 @@ export class DoctorsComponent implements OnInit, OnDestroy {
   saveChanges( doctor: Doctor ){
     console.log(doctor);
 
-    this.doctorsService.updateDoctor( doctor._id, doctor.name )
+    this.doctorsService.updateDoctor( doctor )
         .subscribe( res => {
           Swal.fire('Updated', doctor.name, 'success');
         })
@@ -82,24 +82,24 @@ export class DoctorsComponent implements OnInit, OnDestroy {
     
   }
 
-  async openSweetAlert() {
-    const { value = '' } = await Swal.fire<string>({
-      title: 'Create doctor',
-      text: 'Please type the new doctors name',
-      input: 'text',
-      inputPlaceholder: 'Doctor Name',
-      showCancelButton: true,
-    })
+  // async openSweetAlert() {
+  //   const { value = '' } = await Swal.fire<string>({
+  //     title: 'Create doctor',
+  //     text: 'Please type the new doctors name',
+  //     input: 'text',
+  //     inputPlaceholder: 'Doctor Name',
+  //     showCancelButton: true,
+  //   })
     
-    if ( value.trim().length > 0 ) {
-      console.log(value);
-      this.doctorsService.createDoctor(value)
-          .subscribe( (res: any) => {
-            this.doctors.push( res.doctor )
-            Swal.fire('Created', res.doctor.name, 'success');
-          })
-    }
-  }
+  //   if ( value.trim().length > 0 ) {
+  //     console.log(value);
+  //     this.doctorsService.createDoctor(value)
+  //         .subscribe( (res: any) => {
+  //           this.doctors.push( res.doctor )
+  //           Swal.fire('Created', res.doctor.name, 'success');
+  //         })
+  //   }
+  // }
 
   openModal(doctor: Doctor) {
     console.log(doctor);

@@ -15,6 +15,8 @@ import { UsersComponent } from './manteinances/users/users.component';
 import { HospitalsComponent } from './manteinances/hospitals/hospitals.component';
 import { DoctorsComponent } from './manteinances/doctors/doctors.component';
 import { DoctorComponent } from './manteinances/doctors/doctor.component';
+import { SearchesComponent } from './searches/searches.component';
+import { AdminGuard } from '../guards/admin.guard';
 
 const routes: Routes = [
     { 
@@ -26,16 +28,19 @@ const routes: Routes = [
             { path: 'progress', component : ProgressComponent, data: { title: 'Progress' }},
             { path: 'grafica1', component : Grafica1Component, data: { title: 'Graph' }},
             { path: 'account-settings', component : AccountSettingsComponent, data: { title: 'Account Settings' }},
+            { path: 'search/:term', component : SearchesComponent, data: { title: 'Searches' }},
             { path: 'promise', component : PromiseComponent, data: { title: 'Promise' }},
             { path: 'rxjs', component : RxjsComponent, data: { title: 'RXJS' }},
             { path: 'profile', component : ProfileComponent, data: { title: 'Profile' }},
             { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 
             // Manteinances
-            { path: 'users', component : UsersComponent, data: { title: 'User Application' }},
             { path: 'hospitals', component : HospitalsComponent, data: { title: 'Hospital Application' }},
             { path: 'doctors', component : DoctorsComponent, data: { title: 'Doctor Application' }},
             { path: 'doctor/:id', component : DoctorComponent, data: { title: 'Doctor Application' }},
+
+            //Admin Routes (Protected by Admin Guard)
+            { path: 'users', canActivate: [AdminGuard], component : UsersComponent, data: { title: 'User Application' }},
         ]
   },
   

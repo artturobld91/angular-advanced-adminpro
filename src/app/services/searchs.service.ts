@@ -51,6 +51,10 @@ export class SearchsService {
             );
   }
 
+  globalSearches( term: string){
+    const url = `${ base_url }/search/${ term }`;
+    return this.http.get<any[]>( url, this.headers )
+  }
 
   private transformUsers( results: any[] ): User[] {
 
